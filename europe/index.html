@@ -574,7 +574,7 @@ const GAMES = {
   flags:   {title:'Flag Match',     badge:['🚩','Flag Expert'],  learn:()=>learnFlags(), play:()=>playFlags()},
   landmarks:{title:'Landmark Hunt', badge:['🗺️','Landmark Legend'], learn:()=>learnLandmarks(), play:()=>playLandmarks()},
 };
-function openGame(key, mode){ mode = mode || S.modes[key] || 'learn'; S.modes[key]=mode; save(); CUR_GAME=key; CUR_MODE=mode; closeModal(); GAMES[key][mode](); }
+function openGame(key, mode){ mode = mode || 'learn'; S.modes[key]=mode; save(); CUR_GAME=key; CUR_MODE=mode; closeModal(); GAMES[key][mode](); }
 function switchHTML(){ return CUR_GAME ? `<div class="modeswitch" role="group" aria-label="Learn or play">
   <button data-m="learn" class="${CUR_MODE==='learn'?'on':''}">📖 Learn</button><button data-m="play" class="${CUR_MODE==='play'?'on':''}">🎮 Play</button></div>` : ''; }
 function shell(panelHTML, mapOpts){

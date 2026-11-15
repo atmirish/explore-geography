@@ -1389,7 +1389,7 @@ const PLAY = {sort:()=>playSort(),find:()=>playFind(),hunt:()=>playHunt(),focal:
 const LEARN = {sort:()=>learnSort(),find:()=>learnFind(),hunt:()=>learnHunt(),focal:()=>learnFocal(),nature:()=>learnNature(),towns:()=>learnTowns(),gaa:()=>learnGAA(),wild:()=>learnWild()};
 function openGame(key, mode){
   S.modes = S.modes || {};
-  mode = mode || S.modes[key] || 'learn';
+  mode = mode || 'learn';   // always start in Learn when coming in from the home screen
   S.modes[key]=mode; save();
   CUR_GAME=key; CUR_MODE=mode; closeModal();
   (mode==='learn'?LEARN:PLAY)[key]();
