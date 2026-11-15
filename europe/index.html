@@ -390,6 +390,9 @@ button.fw:hover{border-color:var(--ink)}
   #map .lbl{font-size:calc(17px / var(--z));stroke-width:calc(4.2px / var(--z))}
   .modes{grid-template-columns:1fr 1fr}
 }
+.allgames{text-decoration:none;color:var(--ink)}
+.allgames[hidden]{display:none}
+@media (max-width:560px){.allgames .agl{display:none}}
 </style>
 </head>
 <body>
@@ -397,6 +400,7 @@ button.fw:hover{border-color:var(--ink)}
   <header class="top">
     <button class="brand" id="homeBtn"><div class="dot"></div><span class="t">Explore Europe</span></button>
     <div class="spacer"></div>
+    <a class="pill allgames" id="allGames" href="../" hidden aria-label="Explore Geography home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16324f" stroke-width="2.4"><circle cx="12" cy="12" r="9.5" fill="#bfe7f6"/><path d="M12 2.5c-3 3-3 16 0 19M12 2.5c3 3 3 16 0 19M3 9.5h18M3 14.5h18"/></svg><span class="agl">All games</span></a>
     <button class="pill" id="homeTop"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16324f" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="#ffc933"/></svg> Home</button>
     <button class="pill" id="ppBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16324f" stroke-width="2.4" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2" fill="#1f3f8f"/><circle cx="12" cy="10.5" r="3.2" stroke="#ffc933" stroke-width="1.8"/><path d="M9 16.5h6" stroke="#ffc933" stroke-width="1.8" stroke-linecap="round"/></svg> Passport</button>
   </header>
@@ -842,5 +846,6 @@ document.querySelector('.brand .dot').innerHTML=ICON.globe;
 home();
 
 </script>
+<script>(function(){var a=document.getElementById('allGames');if(a&&/\/(ireland|europe)\/(index\.html)?$/i.test(location.pathname))a.hidden=false;})();</script>
 </body>
 </html>
