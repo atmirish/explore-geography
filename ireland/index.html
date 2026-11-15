@@ -1644,7 +1644,7 @@ function playWild(){
 function passport(){
   CUR_GAME=null;
   view.innerHTML=`
-  <div class="pp-head">${pip(90)}<div><h2>My Ireland Passport</h2><p>Pas Éireannach · ${S.level==='junior'?'Junior':'Senior'} Explorer</p></div></div>
+  <div class="pp-head">${ICON.passport.replace('<svg ','<svg width="96" height="96" ')}<div><h2>My Ireland Passport</h2><p>Pas Éireannach · ${S.level==='junior'?'Junior':'Senior'} Explorer</p></div></div>
   <section class="passport" style="margin-top:18px">
     <div class="card"><h3 style="margin:0 0 4px">Counties found: ${S.disc.length}/32</h3>
       <div class="prompt-k" style="margin-bottom:8px">Counties light up in their province colour as you discover them.</div>
