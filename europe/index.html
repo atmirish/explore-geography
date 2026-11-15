@@ -38,7 +38,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:400;letter-spacing:.3px;text-
 /* header */
 header.top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:26px;padding:0}
-.brand .dot{width:44px;height:44px;border-radius:50%;background:var(--leinster);border:var(--line);box-shadow:0 3px 0 var(--ink);display:grid;place-items:center}
+.brand .dot{width:44px;height:44px;border-radius:50%;background:#003399;border:var(--line);box-shadow:0 3px 0 var(--ink);display:grid;place-items:center}
 .spacer{flex:1}
 .pill{background:var(--paper);border:var(--line);border-radius:999px;padding:7px 15px;font-weight:600;box-shadow:0 3px 0 var(--ink);display:flex;align-items:center;gap:7px;font-size:16px;transition:transform .08s}
 button.pill:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
@@ -848,7 +848,7 @@ function passport(){
 }
 $('#homeBtn').onclick=$('#homeTop').onclick=()=>{ closeModal(); home(); };
 $('#ppBtn').onclick=()=>{ closeModal(); passport(); };
-document.querySelector('.brand .dot').innerHTML=ICON.globe;
+document.querySelector('.brand .dot').innerHTML=`<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><g fill="#ffcc00"><polygon points="20.0,3.9 20.9,6.3 23.4,6.4 21.4,8.0 22.1,10.4 20.0,9.0 17.9,10.4 18.6,8.0 16.6,6.4 19.1,6.3"/><polygon points="26.2,5.6 27.1,8.0 29.7,8.1 27.7,9.6 28.4,12.1 26.2,10.7 24.1,12.1 24.8,9.6 22.8,8.1 25.4,8.0"/><polygon points="30.8,10.2 31.7,12.5 34.2,12.6 32.3,14.2 32.9,16.7 30.8,15.2 28.7,16.7 29.4,14.2 27.4,12.6 29.9,12.5"/><polygon points="32.5,16.4 33.4,18.8 35.9,18.9 33.9,20.5 34.6,22.9 32.5,21.5 30.4,22.9 31.1,20.5 29.1,18.9 31.6,18.8"/><polygon points="30.8,22.6 31.7,25.0 34.2,25.1 32.3,26.7 32.9,29.2 30.8,27.8 28.7,29.2 29.4,26.7 27.4,25.1 29.9,25.0"/><polygon points="26.2,27.2 27.1,29.6 29.7,29.7 27.7,31.3 28.4,33.7 26.2,32.3 24.1,33.7 24.8,31.3 22.8,29.7 25.4,29.6"/><polygon points="20.0,28.9 20.9,31.3 23.4,31.4 21.4,33.0 22.1,35.4 20.0,34.0 17.9,35.4 18.6,33.0 16.6,31.4 19.1,31.3"/><polygon points="13.8,27.2 14.6,29.6 17.2,29.7 15.2,31.3 15.9,33.7 13.8,32.3 11.6,33.7 12.3,31.3 10.3,29.7 12.9,29.6"/><polygon points="9.2,22.7 10.1,25.0 12.6,25.1 10.6,26.7 11.3,29.2 9.2,27.8 7.1,29.2 7.7,26.7 5.8,25.1 8.3,25.0"/><polygon points="7.5,16.4 8.4,18.8 10.9,18.9 8.9,20.5 9.6,22.9 7.5,21.5 5.4,22.9 6.1,20.5 4.1,18.9 6.6,18.8"/><polygon points="9.2,10.1 10.1,12.5 12.6,12.6 10.6,14.2 11.3,16.7 9.2,15.2 7.1,16.7 7.7,14.2 5.8,12.6 8.3,12.5"/><polygon points="13.7,5.6 14.6,8.0 17.2,8.1 15.2,9.6 15.9,12.1 13.7,10.7 11.6,12.1 12.3,9.6 10.3,8.1 12.9,8.0"/></g></svg>`;
 home();
 
 </script>
