@@ -61,6 +61,7 @@ button.pill:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
 .age button.on{background:var(--ink);color:#fff}
 .age-note{font-size:15px;color:var(--ink-soft);margin-top:10px}
 .hero-pip{position:relative;display:flex;justify-content:center;align-items:flex-end;height:300px}
+.hero-mapm{display:none}
 .hero-pip .island{position:absolute;inset:0;width:100%;height:100%}
 .hero-pip .pipstand{position:relative;margin-bottom:58px;margin-left:30px;animation:bob 3s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
@@ -241,6 +242,8 @@ button.pill:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
 @media (max-width:900px){
   .hero{grid-template-columns:1fr}
   .hero-pip{display:none}
+  .hero-mapm{display:block;background:#3b97cf;border:var(--line);border-radius:22px;box-shadow:0 5px 0 var(--ink);padding:10px;max-width:520px;width:100%;margin:2px auto 0}
+  .hero-mapm svg{display:block;width:100%;height:auto;max-height:52dvh}
   .modes{grid-template-columns:1fr 1fr}
   .play{grid-template-columns:1fr}
   .panel{order:-1}
@@ -561,6 +564,13 @@ const ICON = {
   }catch(e){}
 })();
 
+function phoneMapSVG(){
+  let d=''; for(const n of COUNTIES) d+=MAP.counties[n].d;
+  let s=`<svg viewBox="-30 -25 680 870" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of Ireland coloured by province">`;
+  s+=`<path d="${d}" fill="#16324f" transform="translate(0,10)"/>`;
+  for(const n of COUNTIES) s+=`<path d="${MAP.counties[n].d}" fill="${PROV[C[n][0]].hex}" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/>`;
+  return s+'</svg>';
+}
 function islandSVG(){
   let d=''; for(const n of COUNTIES) d+=MAP.counties[n].d;
   let s=`<svg class="island" viewBox="-40 -30 700 870" preserveAspectRatio="xMidYMid meet" aria-hidden="true">`;
@@ -686,6 +696,7 @@ function home(){
       <div class="age-note" id="ageNote"></div>
     </div>
     <div class="hero-pip">${islandSVG()}<div class="pipstand">${pip(150)}</div></div>
+    <div class="hero-mapm">${phoneMapSVG()}</div>
   </section>
   <section class="modes">
     <button class="mode m1" data-go="sort"><div class="art"><span class="tag">Provinces</span>${ICON.sort}</div><div class="body"><h3>Province Sort</h3><p>Which of the four provinces does each county belong to?</p></div></button>
