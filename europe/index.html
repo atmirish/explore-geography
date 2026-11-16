@@ -395,6 +395,8 @@ button.fw:hover{border-color:var(--ink)}
 .allgames{text-decoration:none;color:var(--ink)}
 .allgames[hidden]{display:none}
 @media (max-width:560px){.allgames .agl{display:none}}
+.tctl{display:flex;gap:6px;align-items:center;flex:none}
+.tctl .btn{white-space:nowrap}
 </style>
 <script data-goatcounter="https://atmirish.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -630,21 +632,26 @@ function learnFinder(){
 }
 function playFinder(){
   const jr=S.level==='junior', N=jr?8:CODES.length, qs=shuffle(jr?jrPool():CODES).slice(0,N);
-  let i=0, score=0, tries=0, locked=false, t0=Date.now(), timer=null;
+  let i=0, score=0, tries=0, locked=false, acc=0, t0=0, running=false, timer=null;
+  const elapsed=()=>acc+(running?Date.now()-t0:0);
   shell(`<div class="card">${progressDots(N)}
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px">
-      <div class="prompt-k">Tap this ${PACK.unit} on the map${jr?'':` <b id="fcount">(1 of ${N})</b>`}:</div>${jr?'':'<div class="pill timer" id="timer">⏱ 0:00</div>'}</div>
+      <div class="prompt-k">Tap this ${PACK.unit} on the map${jr?'':` <b id="fcount">(1 of ${N})</b>`}:</div>${jr?'':'<div class="tctl"><div class="pill timer" id="timer">⏱ 0:00</div><button class="btn small primary" id="tgo">▶ Start</button></div>'}</div>
     <div class="prompt" id="q"></div></div><div id="factSlot"></div>
     ${jr?`<div class="card hint-legend"><div class="legend">${Object.values(G).map(g=>`<span><i style="background:${g.light}"></i>${g.name}</span>`).join('')}</div></div>`:''}`, {tint:jr});
-  if(!jr) timer=setInterval(()=>{ const el=$('#timer'); if(!el){clearInterval(timer);return;} const s=Math.floor((Date.now()-t0)/1000); el.textContent=`⏱ ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; },500);
+  if(!jr) timer=setInterval(()=>{ const el=$('#timer'); if(!el){clearInterval(timer);return;} const s=Math.floor(elapsed()/1000); el.textContent=`⏱ ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; },500);
   function ask(){ tries=0; locked=false; markProg(i,'now'); $('#factSlot').innerHTML=''; const fc=$('#fcount'); if(fc) fc.textContent=`(${i+1} of ${N})`;
-    const c=qs[i], g=grp(c); $('#q').innerHTML=`${esc(name(c))}${jr?`<small>It's in <b style="color:${g.hex}">${g.name}</b></small>`:''}`;
+    showQ(); }
+  function showQ(){ const c=qs[i], g=grp(c), fresh=i===0&&acc===0;
+    if(!jr && !running){ $('#q').innerHTML=`<span style="color:var(--ink-soft)">${fresh?'Ready?':'⏸ Paused'}</span><small>Press <b>▶ Start</b> to ${fresh?'begin. The clock starts when you press it.':'carry on.'}</small>`; say(fresh?'Press <b>▶ Start</b> when you\'re ready. You can stop the clock any time.':'The clock is stopped. Press <b>▶ Start</b> to carry on.','happy'); return; }
+    $('#q').innerHTML=`${esc(name(c))}${jr?`<small>It's in <b style="color:${g.hex}">${g.name}</b></small>`:''}`;
     say(i===0?`Find <b>${esc(name(c))}</b>! Tiny countries have a dot. Zoom in if you need to.`:`Now find <b>${esc(name(c))}</b>!`,'happy'); }
+  if(!jr) $('#tgo').onclick=()=>{ if(running){ acc+=Date.now()-t0; running=false; $('#tgo').textContent='▶ Start'; } else { t0=Date.now(); running=true; $('#tgo').textContent='⏸ Stop'; } tone([running?700:400],.06); showQ(); };
   function done(){ clearInterval(timer); if(jr){ finish('finder',score,N); return; }
-    const s=Math.round((Date.now()-t0)/1000), fmt=x=>`${Math.floor(x/60)}m ${x%60}s`, prev=S.best.finder; let ex=` in ${fmt(s)}`;
+    const s=Math.round(elapsed()/1000), fmt=x=>`${Math.floor(x/60)}m ${x%60}s`, prev=S.best.finder; let ex=` in ${fmt(s)}`;
     if(!prev||s<prev){ S.best.finder=s; save(); ex+=prev?` 🏆 New best time, beating ${fmt(prev)}`:' 🏆 Your first best time'; } else ex+=` (your best is ${fmt(prev)})`;
     finish('finder',score,N,ex); }
-  onUnitTap(t=>{ if(locked) return; const c=qs[i];
+  onUnitTap(t=>{ if(locked) return; if(!jr && !running){ say('Press <b>▶ Start</b> first!','think'); return; } const c=qs[i];
     if(t===c){ locked=true; if(tries===0) score++; yay(); clsUnit(c,'reveal',false); fillUnit(c, grp(c).hex); labelUnit(c); discover(c); markProg(i,tries===0?'ok':'no');
       const last=i===N-1;
       if(!jr){ say(`${praise()} The capital of <b>${esc(name(c))}</b> is <b>${esc(U[c].capital)}</b>.`,'happy'); ZOOM.reset(); setTimeout(()=>{ if(!$('#fcount')) return; if(last) done(); else { i++; ask(); } },800); return; }
